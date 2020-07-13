@@ -1,0 +1,10 @@
+version: '3.3'
+services:
+  dw_db:
+    image: 'postgres:12.3-alpine'
+    container_name: jwt_db
+    ports:
+      - 127.0.0.1:5432:5432
+    environment:
+      - POSTGERS_USER=postgres
+      - POSTGRES_PASSWORD=postgres
