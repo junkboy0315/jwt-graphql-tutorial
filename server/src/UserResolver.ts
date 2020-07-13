@@ -9,6 +9,11 @@ export class UserResolver {
     return 'hi!';
   }
 
+  @Query(() => [User])
+  users() {
+    return User.find();
+  }
+
   @Mutation(() => Boolean) // 成功したかどうかを返す
   async register(
     @Arg('email') email: string,
