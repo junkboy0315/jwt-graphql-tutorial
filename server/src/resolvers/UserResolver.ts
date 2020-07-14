@@ -3,12 +3,14 @@ import {
   Arg,
   Ctx,
   Field,
+  Int,
   Mutation,
   ObjectType,
   Query,
   Resolver,
   UseMiddleware,
 } from 'type-graphql';
+import { getConnection } from 'typeorm';
 import { isAuthorizedMiddleware } from '../auth/isAuthorizedMiddleware';
 import { createAccessToken, createRefreshToken } from '../auth/tokenCreator';
 import { User } from '../entity/User';
@@ -36,6 +38,16 @@ export class UserResolver {
   @Query(() => [User])
   users() {
     return User.find();
+  }
+
+  @Mutation(() => Boolean)
+  async revokeRefreshTokens(@Arg('userId', () => Int) userId: number) {
+    // `user`テーブルのid===userIdのレコードについて、
+    // `tokenVersion`列の値を1つ上げる
+    await getConnection()
+      .getRepository(User)
+      .increment({ id: userId }, 'tokenVersion', 1);
+    return true;
   }
 
   @Mutation(() => LoginRespone) // 成功したかどうかを返す

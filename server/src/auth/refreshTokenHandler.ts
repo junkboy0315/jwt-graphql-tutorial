@@ -17,9 +17,15 @@ export const refreshTokenHander: RequestHandler = async (req, res) => {
     return res.send({ ok: false, accessToken: '' });
   }
 
-  // refresh tokenが正しい場合は以下の処理が行われる
+  // refresh tokenが復元できた場合に以下の処理が行われる
+
   const user = await User.findOne({ id: payload.userId });
   if (!user) {
+    return res.send({ ok: false, accessToken: '' });
+  }
+
+  // refresh tokenのバージョンが古い場合はエラーとする
+  if (payload.tokenVersion !== user.tokenVersion) {
     return res.send({ ok: false, accessToken: '' });
   }
 
