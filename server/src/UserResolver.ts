@@ -1,5 +1,4 @@
 import { compare, hash } from 'bcryptjs';
-import { sign } from 'jsonwebtoken';
 import {
   Arg,
   Ctx,
@@ -9,6 +8,7 @@ import {
   Query,
   Resolver,
 } from 'type-graphql';
+import { createAccessToken, createRefreshToken } from './auth';
 import { User } from './entity/User';
 import { MyContext } from './MyContext';
 
@@ -48,22 +48,12 @@ export class UserResolver {
     }
 
     // reflesh token
-    res.cookie(
-      'jid',
-      sign({ userId: user.id }, 'qwerqwer', {
-        expiresIn: '15m',
-      }),
-      {
-        httpOnly: true,
-      },
-    );
+    res.cookie('jid', createRefreshToken(user), {
+      httpOnly: true,
+    });
 
     // access token
-    return {
-      accessToken: sign({ userId: user.id }, 'asdfasdfasd', {
-        expiresIn: '15m',
-      }),
-    };
+    return createAccessToken(user);
   }
 
   @Mutation(() => Boolean) // 成功したかどうかを返す
