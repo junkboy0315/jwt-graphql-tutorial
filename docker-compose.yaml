@@ -19,3 +19,14 @@ services:
     ports:
       - '8080:8080'
     command: bash -c 'yarn && yarn start'
+  jwt_client:
+    image: node:12.18.2
+    container_name: jwt_client
+    volumes:
+      - ./client:/root/client
+      - /root/client/node_modules/
+    working_dir: /root/client
+    ports:
+      - '3000:3000'
+    command: bash -c 'yarn && yarn start'
+    stdin_open: true
