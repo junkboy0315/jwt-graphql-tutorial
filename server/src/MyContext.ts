@@ -1,7 +1,5 @@
-import { Request, Response } from 'express';
+import { ExpressContext } from 'apollo-server-express/dist/ApolloServer';
 
-export interface MyContext {
-  req: Request;
-  res: Response;
+export interface MyContext extends ExpressContext {
   payload?: { userId: string };
 }

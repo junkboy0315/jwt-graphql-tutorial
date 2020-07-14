@@ -14,6 +14,7 @@ services:
     container_name: jwt_server
     volumes:
       - ./server:/root/server
+      - /root/server/node_modules/
     working_dir: /root/server
     ports:
       - '8080:8080'
@@ -23,6 +24,7 @@ services:
     container_name: jwt_client
     volumes:
       - ./client:/root/client
+      - /root/client/node_modules/
     working_dir: /root/client
     ports:
       - '3000:3000'

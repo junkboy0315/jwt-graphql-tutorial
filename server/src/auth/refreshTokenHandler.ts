@@ -5,13 +5,17 @@ import { createAccessToken, createRefreshToken } from './tokenCreator';
 
 export const refreshTokenHander: RequestHandler = async (req, res) => {
   // refresh tokenが有効であることを確認する
+  // (ここでは、refreshTokenのみcookieの`jid`に格納されている前提とする)
   const refreshToken = req.cookies.jid;
   if (!refreshToken) {
     return res.send({ ok: false, accessToken: '' });
   }
-  let payload: any = null;
+  let refreshTokenPayload: any = null;
   try {
-    payload = verify(refreshToken, process.env.REFRESH_TOKEN_SECRET!);
+    refreshTokenPayload = verify(
+      refreshToken,
+      process.env.REFRESH_TOKEN_SECRET!,
+    );
   } catch (err) {
     console.log(err);
     return res.send({ ok: false, accessToken: '' });
@@ -19,13 +23,13 @@ export const refreshTokenHander: RequestHandler = async (req, res) => {
 
   // refresh tokenが復元できた場合に以下の処理が行われる
 
-  const user = await User.findOne({ id: payload.userId });
+  const user = await User.findOne({ id: refreshTokenPayload.userId });
   if (!user) {
     return res.send({ ok: false, accessToken: '' });
   }
 
   // refresh tokenのバージョンが古い場合はエラーとする
-  if (payload.tokenVersion !== user.tokenVersion) {
+  if (refreshTokenPayload.tokenVersion !== user.tokenVersion) {
     return res.send({ ok: false, accessToken: '' });
   }
 

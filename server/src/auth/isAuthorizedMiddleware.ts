@@ -1,8 +1,8 @@
 import { verify } from 'jsonwebtoken';
-import { MiddlewareFn } from 'type-graphql/dist/interfaces/Middleware';
+import { MiddlewareFn } from 'type-graphql';
 import { MyContext } from '../MyContext';
 
-export const isAuthorizedMiddleware: MiddlewareFn<MyContext> = async (
+export const isAuthorizedMiddleware: MiddlewareFn<MyContext> = (
   { context },
   next,
 ) => {
