@@ -7,9 +7,11 @@ import {
   ObjectType,
   Query,
   Resolver,
+  UseMiddleware,
 } from 'type-graphql';
 import { createAccessToken, createRefreshToken } from './auth';
 import { User } from './entity/User';
+import { isAuthorized } from './isAuthorized';
 import { MyContext } from './MyContext';
 
 @ObjectType()
@@ -23,6 +25,12 @@ export class UserResolver {
   @Query(() => String)
   hello() {
     return 'hi!';
+  }
+
+  @Query(() => String)
+  @UseMiddleware(isAuthorized)
+  bye(@Ctx() { payload }: MyContext) {
+    return `bye! user id is ${payload?.userId}`;
   }
 
   @Query(() => [User])
