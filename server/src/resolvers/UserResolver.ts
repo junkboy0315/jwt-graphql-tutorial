@@ -61,7 +61,9 @@ export class UserResolver {
     });
 
     // access token
-    return createAccessToken(user);
+    return {
+      accessToken: createAccessToken(user),
+    };
   }
 
   @Mutation(() => Boolean) // 成功したかどうかを返す

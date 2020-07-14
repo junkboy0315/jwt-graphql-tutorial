@@ -1,14 +1,19 @@
 import { ApolloServer } from 'apollo-server-express';
+import cookieParser from 'cookie-parser';
 import 'dotenv/config';
 import express from 'express';
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
 import { createConnection } from 'typeorm';
+import { refreshTokenHander } from './auth/refreshTokenHandler';
 import { UserResolver } from './resolvers/UserResolver';
 
 (async () => {
   const app = express();
+  app.use(cookieParser());
+
   app.get('/', (_, res) => res.send('hello'));
+  app.post('/refresh_token', refreshTokenHander);
 
   await createConnection();
 
