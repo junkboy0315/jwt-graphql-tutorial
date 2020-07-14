@@ -1,13 +1,8 @@
-import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
 import React from 'react';
+import { useHelloQuery } from './generated/graphql';
 
 export const App: React.FC = () => {
-  const { data, loading } = useQuery(gql`
-    {
-      hello
-    }
-  `);
+  const { data, loading } = useHelloQuery();
 
   if (loading) {
     return <div>loading...</div>;
