@@ -1,6 +1,6 @@
 version: '3.3'
 services:
-  dw_db:
+  jwt_db:
     image: 'postgres:12.3-alpine'
     container_name: jwt_db
     ports:
@@ -8,3 +8,14 @@ services:
     environment:
       - POSTGERS_USER=postgres
       - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=jwt-tutorial
+  jwt_server:
+    image: node:12.18.2
+    container_name: jwt_server
+    volumes:
+      - ./server:/root/server
+      - /root/server/node_modules/
+    working_dir: /root/server
+    ports:
+      - '8080:8080'
+    command: bash -c 'yarn && yarn start'

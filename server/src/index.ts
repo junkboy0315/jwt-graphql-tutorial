@@ -18,7 +18,7 @@ import { UserResolver } from './UserResolver';
   });
   apolloServer.applyMiddleware({ app });
 
-  app.listen(4000, () => {
+  app.listen(8080, () => {
     console.log('express started');
   });
 
