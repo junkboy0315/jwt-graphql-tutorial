@@ -9,10 +9,10 @@ import {
   Resolver,
   UseMiddleware,
 } from 'type-graphql';
-import { createAccessToken, createRefreshToken } from './auth';
-import { User } from './entity/User';
-import { isAuthorized } from './isAuthorized';
-import { MyContext } from './MyContext';
+import { isAuthorizedMiddleware } from '../auth/isAuthorizedMiddleware';
+import { createAccessToken, createRefreshToken } from '../auth/tokenCreator';
+import { User } from '../entity/User';
+import { MyContext } from '../MyContext';
 
 @ObjectType()
 class LoginRespone {
@@ -28,7 +28,7 @@ export class UserResolver {
   }
 
   @Query(() => String)
-  @UseMiddleware(isAuthorized)
+  @UseMiddleware(isAuthorizedMiddleware)
   bye(@Ctx() { payload }: MyContext) {
     return `bye! user id is ${payload?.userId}`;
   }

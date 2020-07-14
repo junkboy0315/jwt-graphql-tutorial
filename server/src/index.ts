@@ -4,7 +4,7 @@ import express from 'express';
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
 import { createConnection } from 'typeorm';
-import { UserResolver } from './UserResolver';
+import { UserResolver } from './resolvers/UserResolver';
 
 (async () => {
   const app = express();
