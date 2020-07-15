@@ -99,6 +99,15 @@ export class UserResolver {
     };
   }
 
+  @Mutation(() => Boolean)
+  async logout(@Ctx() { res }: MyContext) {
+    // reflesh tokenを空文字列にしてクリアする
+    res.cookie('jid', '', {
+      httpOnly: true,
+    });
+    return true;
+  }
+
   @Mutation(() => Boolean) // 成功したかどうかを返す
   async register(
     @Arg('email') email: string,
