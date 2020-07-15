@@ -53,6 +53,7 @@ export type MutationRegisterArgs = {
 export type LoginRespone = {
   __typename?: 'LoginRespone';
   accessToken: Scalars['String'];
+  user: User;
 };
 
 export type ByeQueryVariables = Exact<{ [key: string]: never; }>;
@@ -96,6 +97,10 @@ export type LoginMutation = (
   & { login: (
     { __typename?: 'LoginRespone' }
     & Pick<LoginRespone, 'accessToken'>
+    & { user: (
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'email'>
+    ) }
   ) }
 );
 
@@ -219,6 +224,10 @@ export const LoginDocument = gql`
     mutation Login($email: String!, $password: String!) {
   login(email: $email, password: $password) {
     accessToken
+    user {
+      id
+      email
+    }
   }
 }
     `;

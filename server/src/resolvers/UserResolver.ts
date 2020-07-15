@@ -21,6 +21,8 @@ import { MyContext } from '../MyContext';
 class LoginRespone {
   @Field()
   accessToken: string;
+  @Field()
+  user: User;
 }
 
 @Resolver()
@@ -92,6 +94,7 @@ export class UserResolver {
 
     // access token
     return {
+      user,
       accessToken: createAccessToken(user),
     };
   }
