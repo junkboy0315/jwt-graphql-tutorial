@@ -1,5 +1,5 @@
 import React from 'react';
-import { useUsersQuery } from '../generated/graphql';
+import { useUsersQuery } from '../../generated/graphql';
 
 interface Props {}
 

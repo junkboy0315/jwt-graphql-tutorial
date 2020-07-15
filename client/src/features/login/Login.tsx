@@ -1,26 +1,26 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useRegisterMutation } from '../generated/graphql';
+import { useLoginMutation } from '../../generated/graphql';
 
 interface Props {}
 
-export const Register: React.FC<Props> = () => {
+export const Login: React.FC<Props> = () => {
   const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [register] = useRegisterMutation();
+  const [login] = useLoginMutation();
 
   return (
     <form
       onSubmit={async (e) => {
         e.preventDefault();
-        const response = await register({
+        const response = await login({
           variables: {
             email,
             password,
           },
         });
-        console.log(response);
+        console.log('login success', response);
         history.push('/');
       }}
     >
@@ -37,7 +37,7 @@ export const Register: React.FC<Props> = () => {
           value={password}
         ></input>
       </div>
-      <button type="submit">register</button>
+      <button type="submit">login</button>
     </form>
   );
 };

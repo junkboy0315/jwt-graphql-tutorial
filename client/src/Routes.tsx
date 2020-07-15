@@ -1,10 +1,10 @@
 import { css } from 'emotion';
 import React from 'react';
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
-import { Bye } from './pages/Bye';
-import { Home } from './pages/Home';
-import { Login } from './pages/Login';
-import { Register } from './pages/Register';
+import { Bye } from './features/bye/Bye';
+import { Home } from './features/home/Home';
+import { Login } from './features/login/Login';
+import { Register } from './features/register/Register';
 
 export const Routes: React.FC = () => {
   const styles = {
