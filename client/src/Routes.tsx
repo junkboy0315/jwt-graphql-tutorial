@@ -1,6 +1,7 @@
 import { css } from 'emotion';
 import React from 'react';
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
+import { Bye } from './pages/Bye';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
@@ -25,6 +26,9 @@ export const Routes: React.FC = () => {
           <Link className={styles.linkButton} to="/register">
             register
           </Link>
+          <Link className={styles.linkButton} to="/bye">
+            bye
+          </Link>
         </div>
       </header>
       <Switch>
@@ -36,6 +40,9 @@ export const Routes: React.FC = () => {
         </Route>
         <Route exact path="/login">
           <Login />
+        </Route>
+        <Route exact path="/bye">
+          <Bye />
         </Route>
       </Switch>
     </BrowserRouter>
