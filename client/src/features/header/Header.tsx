@@ -1,12 +1,14 @@
 import { css } from 'emotion';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useMeQuery } from '../../generated/graphql';
+import { useLogoutMutation, useMeQuery } from '../../generated/graphql';
+import { setAccessToken } from '../auth/authUtils';
 
 interface IProps {}
 
 export const Header: React.FC<IProps> = ({}) => {
-  const { data, loading } = useMeQuery({ fetchPolicy: 'network-only' });
+  const { data, loading } = useMeQuery();
+  const [logout, { client: apolloClient }] = useLogoutMutation();
 
   const styles = {
     linkButton: css`
@@ -38,6 +40,15 @@ export const Header: React.FC<IProps> = ({}) => {
       <Link className={styles.linkButton} to="/bye">
         bye
       </Link>
+      <button
+        onClick={async () => {
+          await logout();
+          setAccessToken('');
+          apolloClient?.resetStore();
+        }}
+      >
+        logout
+      </button>
       {userInfo}
     </header>
   );
