@@ -1,5 +1,6 @@
 import { ApolloServer } from 'apollo-server-express';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import 'dotenv/config';
 import express from 'express';
 import 'reflect-metadata';
@@ -11,6 +12,12 @@ import { UserResolver } from './resolvers/UserResolver';
 (async () => {
   const app = express();
   app.use(cookieParser());
+  app.use(
+    cors({
+      origin: 'http://localhost:3000', // 最後にスラッシュをつけてはダメよ
+      credentials: true,
+    }),
+  );
 
   app.get('/', (_, res) => res.send('hello'));
   app.post('/refresh_token', refreshTokenHander);
@@ -23,7 +30,7 @@ import { UserResolver } from './resolvers/UserResolver';
     }),
     context: ({ req, res }) => ({ req, res }),
   });
-  apolloServer.applyMiddleware({ app });
+  apolloServer.applyMiddleware({ app, cors: false });
 
   app.listen(8080, () => {
     console.log('express started');
