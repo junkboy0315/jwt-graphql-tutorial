@@ -2,6 +2,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Authenticator } from './features/auth/Authenticator';
 import { getAccessToken } from './features/auth/authUtils';
 import { Routes } from './Routes';
 
@@ -23,7 +24,9 @@ const client = new ApolloClient({
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <Routes />
+      <Authenticator>
+        <Routes />
+      </Authenticator>
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root'),
